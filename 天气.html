@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>天气</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+
+<body>
+    <input type="button" value="获取天气" onclick="search()">
+    <br>
+    <label>天气结果</label>
+    <br>
+    <textarea rows="15" cols="60" id="output"></textarea>
+    <script type="text/javascript">
+    function search() {
+        var url = 'http://wthrcdn.etouch.cn/weather_mini' + '?city=' + encodeURIComponent('厦门');
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType: "json",
+            success: function(response) {
+                try {
+                    $('#output').val(JSON.stringify(response.data.forecast));
+                } catch (e) {
+
+                }
+            },
+            error: function(e) {
+                console.log("出错：" + e);
+            }
+        });
+    }
+    </script>
+</body>
+
+</html>

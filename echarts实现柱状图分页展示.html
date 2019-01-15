@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="js/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+             var option = {
+                    timeline:{
+                        show:true,
+                        data:[1,2,3,4],
+                        label : {
+                            formatter : function(s) { return "第"+s+"页"; }
+                            },
+                        autoPlay : false,
+                        playInterval : 1000,
+                        tooltip:{formatter : function(s) {return "第"+s.value+"页"; }}
+                    },
+                    options:[
+                        {
+                            title : {
+                                'text':'全国宏观经济指标'
+                            },
+                            tooltip : {'trigger':'axis'},
+                            legend : {
+                                //x:'right',
+                                'data':['GDP','房地产']
+                            },
+                            calculable : true,
+                            grid : {'y2':80},
+                            xAxis : [{
+                                'type':'category',
+                                //'axisLabel':{'interval':0},
+                                'data':[ '北京','天津','河北','山西','内蒙古','辽宁','吉林','黑龙江'
+                                ]
+                            }],
+                            yAxis : [
+                                {
+                                    'type':'value',
+                                    'name':'GDP（亿元）',
+                                    'max':3000
+                                }
+                            ],
+                            series : [
+                                {
+                                    'name':'GDP','type':'bar',
+                                    'data': [100,200,300,400,500,600,700,800]
+                                },
+                                {
+                                    'name':'房地产','type':'bar',
+                                    'data': [500,400,300,400,200,600,300,800]
+                                } ]
+                        },
+                        {
+                            series : [
+                                {'data':  [200,300,400,500,600,700,800]},
+                                {'data': [500,400,300,400,200,600,300]}
+                            ],
+                          xAxis:[{'data':['云南','西藏','陕西','甘肃','青海','宁夏','新疆']}]
+                        },
+                        {
+                            series : [
+                                {'data':  [1200,1300,400,500,600,700,800]},
+                                {'data': [500,400,1300,400,1200,600,300]}
+                            ],
+                          xAxis:[{'data':[ '上海','江苏','浙江','安徽','福建','江西','山东']}]
+                        },
+                        {
+                            series : [
+                                {'data':  [1200,1300,400,500,600,700,800,900]},
+                                {'data': [500,400,1300,400,1200,600,300,900]}
+                            ],
+                          xAxis:[{'data':['湖北','湖南','广东','广西','海南','重庆','四川','贵州']}]
+                        }
+                    ]
+                };
+                    
+                    
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        //myChart.getOption().timeline[0].currentIndex
+        // myChart.dispatchAction({
+        //     type: 'timelineChange',
+        //     // 时间点的 index
+        //     currentIndex: 1
+        // });
+
+
+        // var data = ['法国','澳大利亚','智利','新西兰','西班牙'];
+        // var result = [];
+        // for(var i=0,len=data.length;i<len;i+=3){
+        //   result.push(data.slice(i,i+3));
+        // }
+    </script>
+</body>
+</html>

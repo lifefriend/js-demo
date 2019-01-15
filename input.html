@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>改变 input 焦点光标的颜色</title>
+    <style>
+        input {
+            caret-color: auto;
+            display: block;
+            margin-bottom: .5em;
+          }
+          
+          input.custom {
+            caret-color: red;
+          }
+    </style>
+</head>
+
+<body>
+        <input value="This field uses a default caret." />
+        <input class="custom" value="I have a custom caret color!" />
+        
+</body>
+
+</html>

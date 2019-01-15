@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>js检测是否可以访问公网服务器</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div>
+        wifi认证开发过程所用到的，源码如下： 注：检测AC是否放行成功，是否可以访问公网阿里云服务器
+    </div>
+    <div>
+        <textarea rows="15" cols="60" id="output"></textarea>
+    </div>
+    <script type="text/javascript">
+    (function() {
+        //检测入口
+        checkNet = function() {
+            var def = $.Deferred();
+            xiuNet(null).then(function(res) {
+                netWork(null).then(function(res) {
+                    if (res) {
+                        def.resolve(true);
+                    } else {
+                        def.resolve(false);
+                    }
+                })
+            })
+            return def.promise();
+        }
+
+        //嗅探网络，解决ios弹框接入网络问题
+        var checkTime = 2; //嗅探次数
+        xiuNet = function(def) {
+            if (def == null) { def = $.Deferred(); }
+            var iframe = document.createElement("iframe");
+            iframe.style.cssText = "display:none;width:0px;height:0px;";
+            document.body.appendChild(iframe);
+            var ua = navigator.userAgent;
+            if (ua.indexOf("iPhone") != -1 || ua.indexOf("iPod") != -1 ||
+                ua.indexOf("iPad") != -1) {
+                iframe.src = "http://www.baidu.com" + "?timestap=" + new Date().getTime();
+                console.info("嗅探网络----");
+                if (checkTime > 1) {
+                    checkTime--;
+                    setTimeout(function() {
+                        xiuNet(def)
+                    }, 1000);
+                } else {
+                    def.resolve(true);
+                }
+            } else {
+                def.resolve(false);
+            }
+            return def.promise();
+        }
+
+        //检测网络，是否可以连接公网
+        var cnetTime = 3; //检测网络次数
+        netWork = function(def) {
+            if (def == null) { def = $.Deferred(); }
+            $.ajax({
+                type: "get",
+                timeout: 2000,
+                dataType: "jsonp",
+                jsonp: "callback",
+                cache: false,
+                url: "http://restapi.amap.com/v3/direction/driving?origin=118.06,24.49&destination=118.56,24.99&extensions=all&s=rsv3&strategy=1&waypoints=118.26,24.99&key=" + new Date().getTime(),
+                success: function(data) {
+                    //$("#output").html(data);
+                    def.resolve(true);
+                },
+                error: function(xhr) {
+                    //$("#output").html("status:" + xhr.status);
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        def.resolve(true);
+                    } else {
+                        if (cnetTime > 1) {
+                            cnetTime--;
+                            setTimeout(function() {
+                                netWork(def)
+                            }, 200);
+                        } else {
+                            def.resolve(false);
+                        }
+                    }
+                }
+            });
+            return def.promise();
+        }
+    })();
+    checkNet().then(function(res) {
+        if (res) {
+            //连网成功
+            alert('连网成功');    
+        }else {
+            //连网失败
+            alert('连网失败');  
+        }
+    });
+    </script>
+</body>
+
+</html>

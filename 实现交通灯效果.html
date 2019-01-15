@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>实现交通灯效果</title>
+	<style type="text/css">
+		#traffic>li{
+            display:block;
+            }
+        #traffic span{
+            display:inline-block;
+            width:50px;
+            height:50px;
+            background-color:gray;
+            margin:5px;
+            border-radius:50%;
+            float:left;
+        }
+        #traffic.stop li:nth-child(1) span{
+            background-color:yellow;
+        }
+        #traffic.wait li:nth-child(2) span{
+            background-color:red;
+        }
+        #traffic.pass li:nth-child(3) span{
+            background-color:green;
+        }           
+	</style>
+</head>
+<body>
+	<ul id="traffic">
+	    <li><span></span></li>
+	    <li><span></span></li>
+	    <li><span></span></li>
+	</ul>
+	<script type="text/javascript">
+		const traffic = document.getElementById("traffic");
+		(function reset(){
+		    traffic.className = "wait";
+
+		    setTimeout(function(){
+		        traffic.className = "stop";
+		        setTimeout(function(){
+		            traffic.className = "pass";
+		            setTimeout(reset,2000);
+		        },2000);
+		    },2000);
+		})();
+	</script>
+</body>
+</html>

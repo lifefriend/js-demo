@@ -1,0 +1,11 @@
+(function(window, undefined){
+	var old_onload = window.onload; // 缓存旧的onload方法
+
+	// 定义新的onload
+	window.onload = function(){
+	    console.log("wall");
+	    // 很多代码....
+
+	    typeof old_onload == "function" && old_onload(); // 执行旧的onload方法
+	};
+})(window);

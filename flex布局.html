@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex布局</title>
+    <style>
+        .vedio_popWindow {
+            position: absolute;
+            z-index: 2;
+            top: 10%;
+            left: 10%;
+            background-color: rgb(118, 122, 202);
+            height: 450px;
+            width: 800px;
+            border-radius: 5px;
+        }
+
+        .parent {
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vedio_divHeader {
+            flex: 0 0 30px;
+            color: #fff;
+            padding: 5px;
+            font-size: 15px;
+            border-bottom: 1px solid #fff;
+            box-sizing: border-box;
+        }
+
+        .vedio_content {
+            flex: 1;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        .fr {
+            float: right;
+        }
+
+        .mapwrap {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 拖动的弹窗 -->
+    <div class="vedio_popWindow">
+        <div class="parent">
+            <div class="vedio_divHeader">
+                卷帘效果
+                <a class="fr">×</a>
+            </div>
+            <div class="vedio_content">
+                <div>
+                    <input id="swipe" type="range" style="width: 100%">
+                </div>
+                <div class="mapwrap">
+                    <div id="shuttereffectmap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

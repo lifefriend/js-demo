@@ -1,0 +1,219 @@
+﻿<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>图标处理</title>
+</head>
+
+<body style="background-color:#eee;">
+    选择图片：
+    <input type="file" id="img" onchange="preLoad()">
+    <label>宽：</label>
+    <input type="number" id="realwidth" value="" style="width: 80px;" readonly>
+    <label>高：</label>
+    <input type="number" id="realheigth" value="" style="width: 80px;" readonly>
+    <br/>
+    <div style="display: none;">
+        <!--获取图片真实大小-->
+        <img id="imgShowTemp" src="" alt="">
+    </div>
+    <hr />
+    <div>
+        <label>预览：</label>
+        <br/>
+        <img id="imgShow" src="" alt="" style="max-width: 200px;max-height: 200px;">
+    </div>
+    <label>宽：</label>
+    <input type="number" id="wid" value="" style="width: 80px;">
+    <label>高：</label>
+    <input type="number" id="hei" value="" style="width: 80px;">
+    <label>
+        <input type="radio" name="gray" checked value="0">原色</label>
+    <label>
+        <input type="radio" name="gray" value="1">灰色</label>
+    <label>
+        <input type="radio" name="gray" value="2">反色</label>
+    <label>
+        <input type="radio" name="gray" value="3">透明</label>
+    <button id="start">开始转换</button>
+    <br />
+    <div>
+        <b>Base64数据</b>
+        <span id="len">数据长度：</span>
+    </div>
+    <textarea rows=15 cols=60 id="conte"></textarea>
+    <button id='cpData'>复制</button><span id="succ"></span>
+    <hr />
+    <label>base64转图片png</label>
+    <br />
+    <textarea rows=15 cols=60 id="conte2"></textarea>
+    <button id="start2">开始预览</button>
+    <button id="start3">开始转换</button>
+    <div>
+        预览：<img id="imgShow2" src="" alt="">
+    </div>
+    <script>
+    var img = document.getElementById('img'),
+        imgRealwidth = document.getElementById('realwidth'),
+        imgRealheigth = document.getElementById('realheigth'),
+        imgWidth = document.getElementById('wid'),
+        imgHeigth = document.getElementById('hei'),
+        imgShow = document.getElementById('imgShow'),
+        imgShow2 = document.getElementById('imgShow2'),
+        imgShowTemp = document.getElementById('imgShowTemp'),
+        conte = document.getElementById('conte'),
+        conte2 = document.getElementById('conte2'),
+        len = document.getElementById('len'),
+        start = document.getElementById('start'),
+        start2 = document.getElementById('start2'),
+        start3 = document.getElementById('start3'),
+        cpData = document.getElementById('cpData');
+
+    cpData.addEventListener('click', cpDataF);
+    start.addEventListener('click', startt);
+    start2.addEventListener('click', startt2);
+    start3.addEventListener('click', startt3);
+
+    //图片原始数据
+    var imgData = null;
+    //获取图片真实宽高
+    function preLoad() {
+        if (img.files[0]) {
+            var imgFile = new FileReader();
+            imgFile.readAsDataURL(img.files[0]);
+            imgFile.onload = function() {
+                imgData = this.result; //base64数据 
+                imgShowTemp.setAttribute('src', imgData);
+                imgShowTemp.onload = function() {
+                    imgRealwidth.value = imgShowTemp.width;
+                    imgRealheigth.value = imgShowTemp.height;
+                    imgWidth.value = imgShowTemp.width;
+                    imgHeigth.value = imgShowTemp.height;
+                };
+                imgShow.setAttribute('src', imgData);
+            }
+        } else {
+            imgData = null;
+        }
+    }
+    //图片预览
+    function showPic(imgData) {
+        imgShow.setAttribute('src', imgData);
+        conte.value = imgData;
+        len.innerHTML += imgData.length;
+    }
+    //图片转换
+    function dataProcess(imgData) {
+        var grayValue = getRadioValue("gray");
+        var W = imgWidth.value;
+        var H = imgHeigth.value;
+        var RW = imgRealwidth.value;
+        var RH = imgRealheigth.value;
+        if (grayValue != '0' || W != RW || H != RH) {
+            W = W || RW;
+            H = H || RH;
+            compressImg(imgData, W, H, grayValue, showPic);
+        } else {
+            showPic(imgData);
+        }
+    }
+
+
+    //图片-->base64
+    function startt() {
+        if (imgData) dataProcess(imgData);
+    }
+
+    //base64-->图片
+    function startt2() {
+        var url = conte2.value;
+        if (url.indexOf('data:image') != 0) {
+            url = 'data:image/png;base64,' + url;
+        }
+        imgShow2.setAttribute('src', url);
+    }
+
+    //base64-->base64
+    function startt3() {
+        var url = conte2.value;
+        if (url.indexOf('data:image') != 0) {
+            url = 'data:image/png;base64,' + url;
+        }
+        imgShow2.setAttribute('src', url);
+        imgShow2.onload = function() {
+            imgWidth.value = imgShow2.width;
+            imgHeigth.value = imgShow2.height;
+        };
+        dataProcess(url);
+    }
+
+
+    /*复制数据*/
+    function cpDataF() {
+        conte.select(); // 选择对象    
+        var cpd = document.execCommand("Copy"); // 执行浏览器复制命令    
+        cpd ? document.getElementById('succ').innerHTML = '复制成功' : 　console.warn('复制失败');
+        window.setTimeout(function() {
+            document.getElementById('succ').innerHTML = '';
+        }, 1000)
+    }
+
+    function compressImg(imgData, maxWidth, maxHeight, isGray, onCompress) {
+        if (!imgData) return;
+        onCompress = onCompress || function() {};
+        var canvas = document.createElement('canvas');
+        var img = new Image();
+        img.onload = function() {
+            img.width = maxWidth;
+            img.height = maxHeight;
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            if (isGray != '0') {
+                var imgdata = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                var data = imgdata.data;　　　　　　　　
+                /*灰度处理：求r，g，b的均值，并赋回给r，g，b*/
+                for (var i = 0, n = data.length; i < n; i += 4) {
+                    var average = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    if (isGray == '1') {
+                        data[i] = average;
+                        data[i + 1] = average;
+                        data[i + 2] = average;
+                    } else if (isGray == '2') {
+                        data[i] = 255 - data[i];
+                        data[i + 1] = 255 - data[i + 1];
+                        data[i + 2] = 255 - data[i + 2];
+                    } else if (isGray == '3') {
+                        if (average < 256 && average > 245) {
+                            data[i + 3] = 0;
+                        }
+                    }
+                }
+                ctx.putImageData(imgdata, 0, 0);　　　　　　　　
+                /*返回处理之后的src*/
+                //return canvas.toDataURL();
+            }
+            onCompress(canvas.toDataURL("image/png"));
+        };
+        img.src = imgData;
+    }
+
+    function getRadioValue(name) {
+        var rPort = document.getElementsByName(name);
+        var ip = null;
+        for (i = 0; i < rPort.length; i++) {
+            if (rPort[i].checked) {
+                ip = rPort[i].value;
+                break;
+            }
+
+        }
+        return ip;
+    }
+    </script>
+</body>
+
+</html>

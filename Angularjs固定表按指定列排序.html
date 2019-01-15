@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Angularjs轻松实现表格按指定列排序</title>
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-3.3.0/css/bootstrap.min.css">
+    <style type="text/css">
+    .table-wrap {
+        width: 550px;
+        outline: none;
+        position: relative;
+        font-size: 14px;
+        color: #444;
+        border: 1px #e6e6e6 solid;
+        margin-bottom: 30px;
+    }
+
+    .table-head {
+        padding-right: 17px;
+        background-color: #FAFAFA;
+        border-bottom: 1px #e6e6e6 solid;
+    }
+
+    .table-head-wrap {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .grid {
+        margin: 0px;
+        table-layout: fixed;
+        width: 100%;
+        max-width: none;
+        border-spacing: 0px;
+        empty-cells: show;
+        border-width: 0px;
+        outline: 0px none;
+        border-collapse: collapse;
+    }
+
+    .grid tr th {
+        padding: 0.929em 0.5em;
+        vertical-align: bottom;
+        overflow: hidden;
+        border-left: 1px #e6e6e6 solid;
+        font-weight: normal;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: left;
+    }
+
+    .grid tr th:first-child {
+        border-left-width: 0;
+    }
+
+    .grid tr td {
+        border-left: 1px #e6e6e6 solid;
+        border-bottom: 1px #e6e6e6 solid;
+        padding: 0.929em 0.5em;
+        overflow: hidden;
+        line-height: 1.6em;
+        vertical-align: middle;
+        text-overflow: ellipsis;
+    }
+
+    .grid tr td:first-child {
+        border-left-width: 0px;
+    }
+
+    .grid tr:last-child td {
+        border-bottom: none;
+    }
+
+    .table-content {
+        height: 221px;
+        white-space: normal;
+        position: relative;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: scroll;
+        min-height: 0;
+    }
+    </style>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+</head>
+
+<body>
+    <div class="table-wrap">
+        <div class="table-head">
+            <div class="table-head-wrap">
+                <table class="grid">
+                    <colgroup>
+                        <col style="width:50px">
+                        <col>
+                        <col>
+                        <col style="width:80px">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th ng-click="col='name';desc=!desc">序号</th>
+                            <th ng-click="col='age';desc=!desc">通用名</th>
+                            <th ng-click="col='score';desc=!desc">商品名</th>
+                            <th ng-click="col='score';desc=!desc">英文名</th>
+                            <th ng-click="col='score';desc=!desc">规格</th>
+                            <th ng-click="col='score';desc=!desc">剂型</th>
+                            <th ng-click="col='score';desc=!desc">单位</th>
+                            <th ng-click="col='score';desc=!desc">数量</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="table-content">
+            <table class="grid">
+                <colgroup>
+                    <col style="width:50px">
+                    <col>
+                    <col>
+                    <col style="width:80px">
+                </colgroup>
+                <tbody>
+                    <tr>
+                            <td>1</td>
+                            <td>盐酸多巴胺注射液</td>
+                            <td>多巴胺</td>
+                            <td>Dopamine</td>
+                            <td>2ml:20mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>2</td>
+                            <td>呋塞米注射液</td>
+                            <td>速尿针</td>
+                            <td>Furosemide</td>
+                            <td>2ml:20mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>3</td>
+                            <td>盐酸肾上腺素注射液</td>
+                            <td>肾上腺素</td>
+                            <td>Adrenaline</td>
+                            <td>1ml:1mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>4</td>
+                            <td>盐酸哌替啶注射液</td>
+                            <td>杜冷丁</td>
+                            <td>Pethidine</td>
+                            <td>1ml:50mg/2ml:0.1g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>5</td>
+                            <td>盐酸布桂嗪注射液</td>
+                            <td>强痛定</td>
+                            <td>Bucinnazine</td>
+                            <td>0.1g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>6</td>
+                            <td>尼可刹米注射液</td>
+                            <td>可拉明</td>
+                            <td>Nikethamide</td>
+                            <td>1.5ml:0.375g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>7</td>
+                            <td>地西泮注射液</td>
+                            <td>安定</td>
+                            <td>Diazepam</td>
+                            <td>2ml:10mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>8</td>
+                            <td>去乙酰毛花苷注射液</td>
+                            <td>西地兰</td>
+                            <td>Deslanoside</td>
+                            <td>2ml:0.4mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>9</td>
+                            <td>盐酸胺碘酮</td>
+                            <td>可达龙</td>
+                            <td>Amiodarone</td>
+                            <td>3ml:0.15g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>10</td>
+                            <td>硝酸甘油注射液</td>
+                            <td>硝酸甘油</td>
+                            <td>Nitronglycerin</td>
+                            <td>1ml:5mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>11</td>
+                            <td>重酒石酸去甲肾上腺素注射液</td>
+                            <td>去甲肾上腺素</td>
+                            <td>Noradrenaline</td>
+                            <td>1ml:2mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>12</td>
+                            <td>硫酸阿托品注射液</td>
+                            <td>阿托品</td>
+                            <td>Atropine</td>
+                            <td>1ml:0.5mg/1ml:5mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>13</td>
+                            <td>氨茶碱</td>
+                            <td>氨茶碱</td>
+                            <td>Aminophylline</td>
+                            <td>10ml:0.25g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>14</td>
+                            <td>盐酸消旋山莨菪碱</td>
+                            <td>山莨菪碱</td>
+                            <td>Anisodamine ydrobromide</td>
+                            <td>1ml:10mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>15</td>
+                            <td>胰岛素注射液</td>
+                            <td>胰岛素</td>
+                            <td>Insulin</td>
+                            <td>10ml:400单位×1</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>16</td>
+                            <td>葡萄糖注射液</td>
+                            <td>50%葡萄糖</td>
+                            <td>Glucose</td>
+                            <td>20ml:10g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>17</td>
+                            <td>蒸馏水</td>
+                            <td>注射用水</td>
+                            <td>Distilled water</td>
+                            <td>5ml</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>18</td>
+                            <td>10%葡萄糖酸钙注射液</td>
+                            <td>10%葡萄糖酸钙</td>
+                            <td>Calcium gluconate</td>
+                            <td>10ml:1.0g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>19</td>
+                            <td>硫酸镁注射液</td>
+                            <td>25%硫酸镁</td>
+                            <td>Magnesium Sulfate</td>
+                            <td>10ml：2.5g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>20</td>
+                            <td>甘露醇</td>
+                            <td>20%甘露醇</td>
+                            <td>Mannitol</td>
+                            <td>250ml:50g</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>21</td>
+                            <td>葡萄糖注射液</td>
+                            <td>5%葡萄糖</td>
+                            <td>Glucose</td>
+                            <td>250ml:12.5g</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>22</td>
+                            <td>氯化钠注射液</td>
+                            <td>0.9%氯化钠</td>
+                            <td>Sodium Chloride</td>
+                            <td>250ml:2.25g(0.9%)</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>23</td>
+                            <td>碳酸氢钠</td>
+                            <td>5%碳酸氢钠</td>
+                            <td>Sodium Bicarbonate</td>
+                            <td>250ml:12.5g(5%)</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>24</td>
+                            <td>对乙酰氨基酚缓释片</td>
+                            <td>泰诺林</td>
+                            <td>Paracetamol</td>
+                            <td>0.65g×6</td>
+                            <td>片剂</td>
+                             <td>瓶</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>25</td>
+                            <td>布洛芬缓释胶囊</td>
+                            <td>芬比得</td>
+                            <td>Ibuprofen</td>
+                            <td>0.3g×20</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>26</td>
+                            <td>普萘洛尔</td>
+                            <td>心得安</td>
+                            <td>Propranolol</td>
+                            <td>10mg×100片</td>
+                            <td>片剂</td>
+                             <td>瓶</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>27</td>
+                            <td>盐酸胺碘酮</td>
+                            <td>可达龙</td>
+                            <td>Amiodarone</td>
+                            <td>0.2g</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>28</td>
+                            <td>硝酸甘油片</td>
+                            <td>硝酸甘油片</td>
+                            <td>Nitronglycerin</td>
+                            <td>0.5mg×24片</td>
+                            <td>片剂</td>
+                             <td>瓶</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>29</td>
+                            <td>卡托普利片</td>
+                            <td>开博通</td>
+                            <td>Captopril</td>
+                            <td>12.5mg*20</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>30</td>
+                            <td>硝苯地平缓释片(I)</td>
+                            <td>硝苯地平</td>
+                            <td>Nifedipine</td>
+                            <td>10mg</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>31</td>
+                            <td>氨茶碱</td>
+                            <td>氨茶碱</td>
+                            <td>Aminophylline</td>
+                            <td>0.1g×100</td>
+                            <td>片剂</td>
+                             <td>瓶</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>32</td>
+                            <td>埃索美拉唑镁肠溶片</td>
+                            <td>耐信</td>
+                            <td>Nexium</td>
+                            <td>40mg×7</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>33</td>
+                            <td>盐酸消旋山莨菪碱</td>
+                            <td>山莨菪碱</td>
+                            <td>Anisodamine ydrobromide</td>
+                            <td>5mg×100/10mg×100</td>
+                            <td>片剂</td>
+                             <td>瓶</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>34</td>
+                            <td>多潘立酮片</td>
+                            <td>吗丁啉</td>
+                            <td>Domperidone</td>
+                            <td>10mg×42</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>35</td>
+                            <td>氯雷他定片</td>
+                            <td>开瑞坦</td>
+                            <td>Loratadine</td>
+                            <td>10mg×6</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>36</td>
+                            <td>复方电解质葡萄糖</td>
+                            <td>口服补液盐</td>
+                            <td>口服补液盐</td>
+                            <td>5.125g(复方制剂)×6</td>
+                            <td>冲剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>37</td>
+                            <td>双氯芬酸二乙胺乳胶剂</td>
+                            <td>扶他林乳膏剂</td>
+                            <td>Voltaren</td>
+                            <td>20g:0.2g×1</td>
+                            <td>膏剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>38</td>
+                            <td>盐酸洛哌丁胺胶囊</td>
+                            <td>易蒙停</td>
+                            <td>Loperamide</td>
+                            <td>2mg</td>
+                            <td>胶囊</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>39</td>
+                            <td>头孢克洛胶囊</td>
+                            <td>希刻劳</td>
+                            <td>Ceclor</td>
+                            <td>0.25g×6</td>
+                            <td>胶囊</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>40</td>
+                            <td>格列齐特片(Ⅱ)</td>
+                            <td>达美康</td>
+                            <td>Gliclazide</td>
+                            <td>30mg×30</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>41</td>
+                            <td>注射用甲泼尼龙琥珀酸钠</td>
+                            <td>甲强龙</td>
+                            <td>Methylprednisolone Sodium Succinate</td>
+                            <td>1ml:40mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>42</td>
+                            <td>注射用硝普钠</td>
+                            <td>硝普钠</td>
+                            <td>Sodium Nitroprusside</td>
+                            <td>50mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>43</td>
+                            <td>盐酸乌拉地尔注射液</td>
+                            <td>亚宁定</td>
+                            <td>Nycomed Deutschland GmbH</td>
+                            <td>5ml:25mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>44</td>
+                            <td>注射用白眉蛇毒血凝酶</td>
+                            <td>邦亭</td>
+                            <td>Hemocoagulase</td>
+                            <td>1单位</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>45</td>
+                            <td>注射用盐酸纳洛酮</td>
+                            <td>纳洛酮</td>
+                            <td>Naloxone Hydrochloride</td>
+                            <td>0.4mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>46</td>
+                            <td>磷酸奥司他韦胶囊</td>
+                            <td>达菲</td>
+                            <td>Oseltamivir Phosphate Capsules</td>
+                            <td>75mg</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>47</td>
+                            <td>硫酸沙丁胺醇气雾剂</td>
+                            <td>万托林</td>
+                            <td>Salbutamol Sulphate Aerosol</td>
+                            <td>100ug/揿</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>48</td>
+                            <td>苯巴比妥钠注射液</td>
+                            <td>鲁米那</td>
+                            <td>Phenobarbital Sodium</td>
+                            <td>1ml:0.1g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>49</td>
+                            <td>盐酸甲氧氯普胺注射液</td>
+                            <td>胃复安</td>
+                            <td>Metoclopramide Dihydrochloride</td>
+                            <td>1ml:10mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>50</td>
+                            <td>复方氨林巴比妥注射液</td>
+                            <td>安痛定</td>
+                            <td>Aminophenazoneco</td>
+                            <td>2ml</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>51</td>
+                            <td>盐酸氯丙嗪注射液</td>
+                            <td>冬眠灵</td>
+                            <td>Chlopromazine Hydrochloride</td>
+                            <td>1ml:25mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>52</td>
+                            <td>盐酸异丙嗪注射液</td>
+                            <td>非那根</td>
+                            <td>Promethazine Hydrochloride</td>
+                            <td>1ml:25mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>53</td>
+                            <td>注射用奥美拉唑钠</td>
+                            <td>洛赛克</td>
+                            <td>Omeprazole Sodium</td>
+                            <td>40mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>54</td>
+                            <td>葡萄糖注射液</td>
+                            <td>50%葡萄糖</td>
+                            <td>Glucose</td>
+                            <td>20ml</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>10</td>
+                        </tr>
+                         <tr>
+                            <td>55</td>
+                            <td>葡萄糖注射液</td>
+                            <td>10%葡萄糖</td>
+                            <td>Glucose</td>
+                            <td>500ml:50g</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>56</td>
+                            <td>葡萄糖注射液</td>
+                            <td>5%葡萄糖</td>
+                            <td>Glucose</td>
+                            <td>500ml:25g</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>57</td>
+                            <td>氯化钠注射液</td>
+                            <td>0.9%氯化钠</td>
+                            <td>Sodium Bicarbonate</td>
+                            <td>100ml</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>5</td>
+                        </tr>
+                         <tr>
+                            <td>58</td>
+                            <td>氯化钠注射液</td>
+                            <td>0.9%氯化钠</td>
+                            <td>Sodium Bicarbonate</td>
+                            <td>500ml:4.5g(0.9%)</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>59</td>
+                            <td>烫伤油</td>
+                            <td>烫伤油</td>
+                            <td></td>
+                            <td>20ml</td>
+                            <td>外用</td>
+                             <td>瓶</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>60</td>
+                            <td>云南白药气雾剂（外喷）</td>
+                            <td>云南白药气雾剂</td>
+                            <td></td>
+                            <td>50g</td>
+                            <td>外用</td>
+                             <td>瓶</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>61</td>
+                            <td>麝香祛痛气雾剂（外喷）</td>
+                            <td>理通</td>
+                            <td></td>
+                            <td>56ml</td>
+                            <td>外用</td>
+                             <td>瓶</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>62</td>
+                            <td>酚麻美敏片</td>
+                            <td>泰诺</td>
+                            <td>Paracetamol,Pseudoephedrine Hydrochloride,Dextromethorphan Hydrobromide and ChlophenamineMaleate</td>
+                            <td>1片X20</td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>63</td>
+                            <td>酚磺乙胺</td>
+                            <td>止血敏</td>
+                            <td>Etamsylate</td>
+                            <td>2ml:0.5g</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>64</td>
+                            <td>盐酸戊乙奎醚注射液</td>
+                            <td>长托宁</td>
+                            <td>Penehyclidine Hydrochloride</td>
+                            <td>1ml:1mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>65</td>
+                            <td>复合药品</td>
+                            <td>胸痛包</td>
+                            <td>拜阿司匹林300mg/3、替格瑞洛180mg/2、可定20mg/2</td>
+                            <td></td>
+                            <td>片剂</td>
+                             <td>盒</td>
+                             <td>1</td>
+                        </tr>
+                         <tr>
+                            <td>66</td>
+                            <td>阿司匹林肠溶片</td>
+                            <td>拜阿司匹林</td>
+                            <td>Aspirin Enteric-coated Tablets</td>
+                            <td>300mg</td>
+                            <td>片剂</td>
+                             <td>片</td>
+                             <td>3</td>
+                        </tr>
+                         <tr>
+                            <td>67</td>
+                            <td>替格瑞洛</td>
+                            <td>倍林达</td>
+                            <td>Ticagrelor Tablets</td>
+                            <td>180mg</td>
+                            <td>片剂</td>
+                             <td>片</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>68</td>
+                            <td>瑞舒伐他丁</td>
+                            <td>可定</td>
+                            <td>Rosuvastatin Calcium</td>
+                            <td>20mg</td>
+                            <td>片剂</td>
+                             <td>片</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>69</td>
+                            <td>地塞米松磷酸钠注射液</td>
+                            <td>地塞米松</td>
+                            <td>Dexamethasone</td>
+                            <td>1ml:2mg</td>
+                            <td>针剂</td>
+                             <td>支</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>70</td>
+                            <td>甘露醇</td>
+                            <td>20%甘露醇</td>
+                            <td>Mannitol</td>
+                            <td>250ml:50g</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>71</td>
+                            <td>乳酸林格液注射液</td>
+                            <td>乳酸林格液注射液</td>
+                            <td>Sodium Lactate Ringer’s Injection</td>
+                            <td>250ml</td>
+                            <td>针剂</td>
+                             <td>袋</td>
+                             <td>2</td>
+                        </tr>
+                         <tr>
+                            <td>72</td>
+                            <td>速效救心丸</td>
+                            <td>速效救心丸</td>
+                            <td></td>
+                            <td>40mg</td>
+                            <td>滴丸剂</td>
+                             <td>瓶</td>
+                             <td>3</td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var app = angular.module('myapp', []);
+
+    app.controller('orderByCtrl', function($scope) {
+        $scope.col = 'name'; //默认按name列排序
+        $scope.desc = 0; //默认排序条件升序
+        $scope.data = [{
+            name: 'name 1',
+            gender: 'male',
+            age: 26,
+            score: 70
+        }, {
+            name: 'name 2',
+            gender: 'female',
+            age: 24,
+            score: 84
+        }, {
+            name: 'name 3',
+            gender: 'male',
+            age: 20,
+            score: 76
+        }, {
+            name: 'name 4',
+            gender: 'female',
+            age: 22,
+            score: 64
+        }];
+
+
+    })
+    </script>
+</body>
+
+</html>

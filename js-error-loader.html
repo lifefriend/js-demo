@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script src="https://imgcache.qq.com/qcloud/main/scripts/release/common/vendors/sourcemap/source-map.js"></script>
+  <script>
+    // alias sourceMap for uglify
+    MOZ_SourceMap = sourceMap;
+    sourceMap.SourceMapConsumer.initialize({
+      "lib/mappings.wasm": "https://imgcache.qq.com/qcloud/main/scripts/release/common/vendors/sourcemap/mappings.wasm"
+    });
+  </script>
+  <script src="https://imgcache.qq.com/qcloud/main/scripts/release/common/vendors/uglify.js"></script>
+</head>
+<body onload="ready()">
+<script>
+  // 处理的 message
+  window.onmessage = function(evt) {
+    var sourceOrigin = evt.origin;
+
+    var data = evt.data;
+    var event = data && data.event;
+
+    switch (event) {
+    // 确认已经 ready
+    case 'check-js-loader-ready':
+      return parent.postMessage({ event: 'js-loader-ready' }, sourceOrigin);
+
+    // 请求加载 JS 文件内容
+    case 'js-load-task':
+      return loadJs(data.payload, sourceOrigin);
+
+    // 请求格式化 JS 文件
+    case 'js-prettify-task':
+      return prettify(data.payload, sourceOrigin);
+    }
+  };
+
+  // 加载 JS 文件
+  function loadJs(payload, sourceOrigin) {
+    var url = payload && payload.url;
+    if (!url) {
+      return;
+    }
+    if (!/\.js$/.test(url.split('?').shift())) {
+      parent.postMessage({
+        event: 'js-load-callback',
+        payload: {
+          url: url,
+          result: 'success',
+          source: '非 JS 文件'
+        }
+      }, sourceOrigin);
+      return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      parent.postMessage({
+        event: 'js-load-callback',
+        payload: {
+          url: url,
+          result: 'success',
+          source: xhr.responseText
+        }
+      }, sourceOrigin);
+    }
+    xhr.onerror = function() {
+      parent.postMessage({
+        event: 'js-load-callback',
+        payload: {
+          url: url,
+          result: 'success',
+          source: '资源加载失败（statusCode=' + xhr.status + '）'
+        }
+      }, sourceOrigin);
+    }
+    xhr.open('GET', url);
+    xhr.send();
+  }
+
+  var beautifyCache = {};
+  function beautifyWithSourceMap(source) {
+      var sourceHash = hashString(source);
+    if (beautifyCache[sourceHash]) {
+      return beautifyCache[sourceHash];
+    }
+    return beautifyCache[sourceHash] = new Promise(function(resolve, reject) {
+      try {
+        var result = UglifyJS.minify(source, {
+          output: {
+            beautify: true
+          },
+          sourceMap: {
+            filename: 'pretty.js',
+            url: 'pretty.js.map'
+          }
+        });
+        var code = result.code;
+        var rawSourceMap = JSON.parse(result.map);
+        var consumerPromise = new sourceMap.SourceMapConsumer(rawSourceMap);
+
+        resolve(
+          consumerPromise.then(function(consumer) {
+            return {
+              code: code,
+              sourceMapConsumer: consumer
+            }
+          })
+        );
+      }
+      catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  // 格式化 JS 文件
+  function prettify(payload, sourceOrigin) {
+    if (!payload) {
+      return;
+    }
+
+    var source = payload.source;
+    var lineNumber = payload.lineNumber;
+    var columnNumber = payload.columnNumber;
+
+    beautifyWithSourceMap(source).then(function(result) {
+      var code = result.code;
+      var consumer = result.sourceMapConsumer;
+
+      var position = consumer.generatedPositionFor({
+        source: '0',
+        line: lineNumber,
+        column: columnNumber
+      });
+
+      parent.postMessage({
+        event: 'js-prettify-callback',
+        payload: {
+          hash: payload.hash,
+          result: 'success',
+          prettySource: code,
+          prettyLineNumber: position.line,
+          prettyColumnNumber: position.column + 1
+        }
+      }, sourceOrigin);
+    })
+    .catch(function(err) {
+      parent.postMessage({
+        event: 'js-prettify-callback',
+        payload: {
+          hash: payload.hash,
+          result: 'error',
+          message: err.message,
+          stack: err.stack
+        }
+      }, sourceOrigin)
+    });
+  }
+
+  function hashString(str) {
+    let hash = 0, i, chr, len;
+    if (str.length === 0) return hash;
+    for (i = 0, len = str.length; i < len; i++) {
+      chr = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+  }
+
+
+  function ready() {
+    parent.postMessage({ event: 'js-loader-ready' }, '*');
+  }
+</script>
+</body>
+</html>

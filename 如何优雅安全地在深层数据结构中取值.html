@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+     <script type="text/javascript">
+        const props = {
+            user: {
+                posts: [
+                    { title: 'Foo', comments: [ 'Good one!', 'Interesting...' ] },
+                    { title: 'Bar', comments: [ 'Ok' ] },
+                    { title: 'Baz', comments: []}
+                ],
+                comments: []
+            }
+        };
+        //const get = p => o =>p.reduce((xs, x) =>(xs && xs[x]) ? xs[x] : null, o);
+        const get = (p, o) => p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
+        console.log(get(['user', 'posts', 0, 'comments'], props));
+        console.log(get(['user', 'post', 0, 'comments'], props));
+        function get2(p,o){
+            return p.reduce(function(xs, x){
+                return (xs && xs[x]) ? xs[x] : null;
+            },o);
+        }
+        console.log(get2(['user', 'posts', 0, 'comments'], props));
+        console.log(get(['user', 'post', 0, 'comments'], props))
+     </script>
+</body>
+</html>

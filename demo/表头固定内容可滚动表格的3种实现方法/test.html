@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/test.css">
+    <title>表头固定内容滚动</title>
+</head>
+<body>
+<div class="tableWrap" style="margin:20px;">
+    <label>可滚动表格——表格宽度自动每列宽度设置<col></label>
+    <table class="table-thead">
+        <colgroup>
+            <col width="50">
+            <col width="100">
+            <col width="150">
+            <col width="17">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>账户名称</th>
+            <th>账户编号</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+    <div class="comTbody">
+        <table class="table-tbody" style="border-top: 0;">
+            <colgroup>
+                <col width="50">
+                <col width="100">
+                <col width="150">
+            </colgroup>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>中国电信</td>
+                <td>12312312313132</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>中国电信</td>
+                <td>12312312313132</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>中国电信</td>
+                <td>12312312313132</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>中国电信</td>
+                <td>12312312313132</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>中国电信</td>
+                <td>12312312313132</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<label>可滚动表格——表格宽度100%，列宽度设置<col></label>
+<div class="table-wrap">
+    <div class="table-head">
+        <div class="table-head-wrap">
+            <table class="grid">
+                <colgroup>
+                    <col style="width:80px">
+                    <col>
+                    <col>
+                    <col style="width:150px">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>
+                        <span class="tab-link">序号</span>
+                    </th>
+                    <th>
+                        <span class="tab-link">姓名</span>
+                    </th>
+                    <th>
+                        <span class="tab-link">年龄</span>
+                    </th>
+                    <th>
+                        <span class="tab-link">地址</span>
+                    </th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="table-content">
+        <table class="grid">
+            <colgroup>
+                <col style="width:80px">
+                <col>
+                <col>
+                <col style="width:150px">
+            </colgroup>
+            <tbody>
+            <tr>
+                <td>
+                    <div>001</div>
+                </td>
+                <td>
+                    <div>小明</div>
+                </td>
+                <td>
+                    <div>23</div>
+                </td>
+                <td>
+                    <div>上海</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>001</div>
+                </td>
+                <td>
+                    <div>小明</div>
+                </td>
+                <td>
+                    <div>23</div>
+                </td>
+                <td>
+                    <div>上海</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>001</div>
+                </td>
+                <td>
+                    <div>小明</div>
+                </td>
+                <td>
+                    <div>23</div>
+                </td>
+                <td>
+                    <div>上海</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>001</div>
+                </td>
+                <td>
+                    <div>小明</div>
+                </td>
+                <td>
+                    <div>23</div>
+                </td>
+                <td>
+                    <div>上海</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>001</div>
+                </td>
+                <td>
+                    <div>小明</div>
+                </td>
+                <td>
+                    <div>23</div>
+                </td>
+                <td>
+                    <div>上海</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<label>可滚动表格——表格宽度自动，列宽度固定设置<col></label>
+<div class="data-grid">
+    <div class="data-view">
+        <div class="grid-head">
+            <div class="grid-head-inner">
+                <table class="data-table">
+                    <tbody>
+                    <tr class="data-table-row">
+                        <td>
+                            <div class="datagrid-cell cell-c1">
+                                <div>Item ID</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="datagrid-cell cell-c2">
+                                <div>Product</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="datagrid-cell cell-c3">
+                                <div>List Price</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="datagrid-cell cell-c4">
+                                <div>Unit Cost</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="datagrid-cell cell-c5">
+                                <div>Attribute</div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="grid-body">
+            <table class="datagrid-btable">
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="datagrid-cell cell-c1">
+                            <span>EST-1</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c2">
+                            <span>FI-SW-01</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c3">
+                            <span>36.5</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c4">
+                            <span>10</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c5">
+                            <span>Large</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="datagrid-cell cell-c1">
+                            <span>EST-1</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c2">
+                            <span>FI-SW-01</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c3">
+                            <span>36.5</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c4">
+                            <span>10</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c5">
+                            <span>Large</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="datagrid-cell cell-c1">
+                            <span>EST-1</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c2">
+                            <span>FI-SW-01</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c3">
+                            <span>36.5</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c4">
+                            <span>10</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c5">
+                            <span>Large</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="datagrid-cell cell-c1">
+                            <span>EST-1</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c2">
+                            <span>FI-SW-01</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c3">
+                            <span>36.5</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c4">
+                            <span>10</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c5">
+                            <span>Large</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="datagrid-cell cell-c1">
+                            <span>EST-1</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c2">
+                            <span>FI-SW-01</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c3">
+                            <span>36.5</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c4">
+                            <span>10</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c5">
+                            <span>Large</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="datagrid-cell cell-c1">
+                            <span>EST-1</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c2">
+                            <span>FI-SW-01</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c3">
+                            <span>36.5</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c4">
+                            <span>10</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c5">
+                            <span>Large</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="datagrid-cell cell-c1">
+                            <span>EST-1</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c2">
+                            <span>FI-SW-01</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c3">
+                            <span>36.5</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c4">
+                            <span>10</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="datagrid-cell cell-c5">
+                            <span>Large</span>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

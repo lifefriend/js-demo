@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="js/flowplayer-3.2.18/flowplayer-3.2.13.min.js"></script>
+    <title>RTMP Sample Player FlowPlayer</title>
+</head>
+
+
+<body>
+    <h1>RTMP Sample Player FlowPlayer</h1>
+    <!-- this A tag is where your Flowplayer will be placed. it can be anywhere -->
+    <a href="#" style="display:block;width:520px;height:330px" id="player">
+    </a>
+    <!-- this will install flowplayer inside previous A- tag. -->
+    <script>
+        flowplayer("player", "js/flowplayer-3.2.18/flowplayer-3.2.18.swf", {
+            clip: {  
+                provider: 'rtmp',
+                live: true
+            },
+            plugins: {
+                rtmp: {
+                    url: 'js/flowplayer-3.2.18/flowplayer.rtmp-3.2.13.swf',
+                    netConnectionUrl: 'rtmp://r.demo.flowplayer.netdna-cdn.com/play',
+                    subscribe: true
+                }
+            }
+        });
+    </script>
+    <p>
+        Sample RTMP URL (Live) is "rtmp://live.hkstv.hk.lxdns.com/live/hks"
+    </p>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+
+    var str = "";
+    var timestamp = 0;
+    var pass = 0;
+        str = $("#time").text();
+        timestamp = (new Date()).valueOf();
+        pass = (timestamp - str) / 1000;
+        $("#time").text(pass);
+        if (pass < 60) {
+            $("#time").text(pass + "秒前");
+        } else {
+            if (pass < (60 * 60)) {
+                pass = Math.floor(pass / 60);
+                $("#time").text(pass + "分钟前");
+            } else {
+                if (pass < (60 * 60 * 72)) {
+                    pass = Math.floor(pass / 60 / 60);
+                    $("#time").text(pass + "小时前");
+                } else {
+                    if (pass >= (60 * 60 * 72) ) {
+                        pass = Math.floor(pass / 60 / 60 / 24);
+                        $("#time").text(pass + "天前");
+                    }
+                }
+            }
+        }
+    });
+</script>
+</head>
+
+<body>
+<div id="time">1486122654000</div>
+</body>
+</html>

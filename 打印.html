@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>打印页面</title>
+  <script src="./js/jquery.min.js"></script>
+</head>
+
+<body>
+  <div><a href="#" target="_self" onclick="printme()">打印</a></div>
+  <div id="div1">
+    <p>标题</p>
+    <p>内容</p>
+  </div>
+  <script> 
+    //打印
+    function printme() {
+      document.body.innerHTML = document.getElementById('div1').innerHTML + '<br/>';
+      window.print();
+    }
+  </script>
+</body>
+
+</html>

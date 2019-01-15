@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POST示例</title>
+</head>
+<body>
+    <input type="button" value="POST" onclick="post()">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script>
+        function post(){
+            var extent='106.60836,26.49547,106.81435,26.6582';
+            var postString='jsonStr={"keyWord":"{0}","level":"12","mapBound":"{1}","queryType":"1","count":"10","start":"0"}';
+            postString = postString.replace("{0}", '学校');
+            postString = postString.replace("{1}", extent);           
+            
+            $.ajax({ //简单请求
+                type: "POST",
+                url: 'http://localhost:2396/proxy/proxyHandler.ashx?http://lbs.tianditu.com/api-new/query.do',
+                data: postString,
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(e) {
+                    console.log("出错：" + e);
+                }
+            });
+
+            // $.ajax({ //复杂请求
+            //     url: 'http://localhost:2396/proxy/proxyHandler.ashx?http://lbs.tianditu.com/api-new/query.do',
+            //     method: 'POST',
+            //     dataType: 'json',
+            //     contentType: 'application/json',
+            //     crossDomain: true,
+            //     cache: false,
+            //     data: postString,
+            //     success:function(data){
+            //         console.log(data);
+            //     },
+            //     error:function(data){
+            //         console.log(data);
+            //     }
+            // });
+
+            // var url ='http://localhost:15783/proxyHandler.ashx?http://wthrcdn.etouch.cn/weather_mini&city=' + encodeURIComponent('厦门');
+            // $.ajax({
+            //     type: "GET",
+            //     url: url,
+            //     contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            //     dataType: "json",
+            //     success: function(response) {
+            //         try {
+            //             console.log(response.data.forecast);
+            //         } catch (e) {
+
+            //         }
+            //     },
+            //     error: function(e) {
+            //         console.log("出错：" + e);
+            //     }
+            // });
+        }
+    </script>
+</body>
+</html>

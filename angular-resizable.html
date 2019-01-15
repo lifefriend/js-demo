@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="js/angular.min.js"></script>
+    <style type="text/css">
+    .box {
+        width: 200px;
+        height: 200px;
+        line-height: 200px;
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+        background: -webkit-linear-gradient(red, #ccc);
+        /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(red, #ccc);
+        /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(red, #ccc);
+        /* For Firefox 3.6 to 15 */
+        background: linear-gradient(red, #ccc);
+        /* Standard syntax */
+    }
+    </style>
+</head>
+
+<body class="jumbotron" ng-controller="MainCtrl" ng-app="myApp">
+   
+    <div resizable on-resize="resize($evt, $ui)" class="box">Resizable Div!</div>
+    
+    <script type="text/javascript">
+    (function() {
+        'use strict';
+
+        angular.module('myApp', [])
+
+            .directive('resizable', function() {
+
+                return {
+                    restrict: 'A',
+                    scope: {
+                        callback: '&onResize'
+                    },
+                    link: function postLink(scope, elem, attrs) {
+                        elem.resizable();
+                        elem.on('resize', function(evt, ui) {
+                            scope.$apply(function() {
+                                if (scope.callback) {
+                                    scope.callback({ $evt: evt, $ui: ui });
+                                } 
+                            })
+                        });
+                    }
+                };
+            })
+            .controller('MainCtrl', function($scope) {
+
+                $scope.resize = function(evt, ui) {
+                    //console.log (evt,ui);
+                    $scope.w = ui.size.width;
+                    $scope.h = ui.size.height;
+                }
+
+            });
+
+    })();
+    </script>
+</body>
+
+</html>

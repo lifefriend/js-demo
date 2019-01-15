@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <style>
+    /* 表格容器样式，用flex布局可保证table内容能铺满剩余空间 */
+
+    .sti-tbl-container {
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    /* 设置表格的布局方式，用于宽度对齐 */
+
+    .sti-tbl-body>table,
+    .sti-tbl-header>table {
+        table-layout: fixed;
+    }
+    /* 设置表格内容容器，用于铺满整个剩余空间 */
+
+    .sti-tbl-container .sti-tbl-body {
+        flex-grow: 1;
+        overflow-y: scroll;
+        height: 230px;
+    }
+  .sti-tbl-container table thead tr th:nth-child(1){width : 8%;}
+  .sti-tbl-container table thead tr th:nth-child(2){width : 25%;}
+  .sti-tbl-container table thead tr th:nth-child(3){width : 14%;}
+  .sti-tbl-container table thead tr th:nth-child(4){width : 15%;}
+  .sti-tbl-container table thead tr th:nth-child(5){width : 10%}
+  .sti-tbl-container table thead tr th:nth-child(6){width : 10%}
+  .sti-tbl-container table thead tr th:nth-child(7){width : 10%}
+  .sti-tbl-container table thead tr th:nth-child(8){width : 8%;}
+
+  .sti-tbl-container table tbody tr td:nth-child(1){width : 8%;}
+  .sti-tbl-container table tbody tr td:nth-child(2){width : 25%;}
+  .sti-tbl-container table tbody tr td:nth-child(3){width : 14%;}
+  .sti-tbl-container table tbody tr td:nth-child(4){width : 15%;}
+  .sti-tbl-container table tbody tr td:nth-child(5){width : 10%}
+  .sti-tbl-container table tbody tr td:nth-child(6){width : 10%}
+  .sti-tbl-container table tbody tr td:nth-child(7){width : 10%}
+  .sti-tbl-container table tbody tr td:nth-child(8){width : 8%;}
+    </style>
+</head>
+
+<body>
+    <!-- 表格容器，可用于设置整个的边框及高度 -->
+    <div class="sti-tbl-container" style="width: 600px;">
+        <!-- 表头容器，必须留出17px的滚动条位置 -->
+        <div class="sti-tbl-header" style="padding-right:17px;">
+            <table class="table table-bordered" style="margin-bottom: 0px;border-bottom-style: none;">
+            <thead>
+                <tr>
+                    <th ng-click="col='name';desc=!desc">序号</th>
+                    <th ng-click="col='age';desc=!desc">通用名</th>
+                    <th ng-click="col='score';desc=!desc">商品名</th>
+                    <th ng-click="col='score';desc=!desc">英文名</th>
+                    <th ng-click="col='score';desc=!desc">规格</th>
+                    <th ng-click="col='score';desc=!desc">剂型</th>
+                    <th ng-click="col='score';desc=!desc">单位</th>
+                    <th ng-click="col='score';desc=!desc">数量</th>
+                </tr>
+            </thead>                
+            </table>
+        </div>
+        <!-- 表格内容容器-->
+        <div class="sti-tbl-body">
+            <table class="table table-bordered">
+                <tbody>
+                     <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr><tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr><tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>盐酸吗啡注射液</td>
+                            <td>吗啡</td>
+                            <td>Morphine</td>
+                            <td>10mg</td>
+                            <td>针剂</td>
+                            <td>支</td>
+                            <td>2</td>
+                        </tr>
+                        
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

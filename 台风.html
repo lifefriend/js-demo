@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="tfinfomarqueen"></div>
+    <input type="button" value="获取台风消息" onclick="getTy()">
+    <script type="text/javascript">
+    var Hashtable = function(v) {
+        function z(b) {
+            return typeof b == x ? b : "" + b
+        }
+
+        function A(b) {
+            var c;
+            return typeof b == x ? b : typeof b.hashCode == w ? (c = b.hashCode(),
+                typeof c == x ? c : A(c)) : z(b)
+        }
+
+        function B(d, e) {
+            for (var f in e) {
+                e.hasOwnProperty(f) && (d[f] = e[f])
+            }
+        }
+
+        function C(c, d) {
+            return c.equals(d)
+        }
+
+        function D(b, d) {
+            return typeof d.equals == w ? d.equals(b) : b === d
+        }
+
+        function E(a) {
+            return function(b) {
+                if (null === b) {
+                    throw new Error("null is not a valid " + a)
+                }
+                if (b === v) {
+                    throw new Error(a + " must not be undefined")
+                }
+            }
+        }
+
+        function H(e, f, g, h) {
+            this[0] = e,
+                this.entries = [],
+                this.addEntry(f, g),
+                null !== h && (this.getEqualityFunction = function() {
+                    return h
+                })
+        }
+
+        function M(b) {
+            return function(a) {
+                for (var g, f = this.entries.length, h = this.getEqualityFunction(a); f--;) {
+                    if (g = this.entries[f],
+                        h(a, g[0])) {
+                        switch (b) {
+                            case I:
+                                return !0;
+                            case J:
+                                return g;
+                            case K:
+                                return [f, g[1]]
+                        }
+                    }
+                }
+                return !1
+            }
+        }
+
+        function N(b) {
+            return function(a) {
+                var h, i, j, g = a.length;
+                for (h = 0,
+                    i = this.entries,
+                    j = i.length; j > h; ++h) {
+                    a[g + h] = i[h][b]
+                }
+            }
+        }
+
+        function O(e, f) {
+            for (var h, g = e.length; g--;) {
+                if (h = e[g],
+                    f === h[0]) {
+                    return g
+                }
+            }
+            return null
+        }
+
+        function P(d, e) {
+            var f = d[e];
+            return f && f instanceof H ? f : null
+        }
+
+        function Q() {
+            var m, o, p, a = [],
+                f = {},
+                g = {
+                    replaceDuplicateKey: !0,
+                    hashCode: A,
+                    equals: null
+                },
+                k = arguments[0],
+                l = arguments[1];
+            l !== v ? (g.hashCode = k,
+                    g.equals = l) : k !== v && B(g, k),
+                m = g.hashCode,
+                o = g.equals,
+                this.properties = g,
+                this.put = function(b, c) {
+                    F(b),
+                        G(c);
+                    var i, j, d = m(b),
+                        q = null;
+                    return i = P(f, d),
+                        i ? (j = i.getEntryForKey(b),
+                            j ? (g.replaceDuplicateKey && (j[0] = b),
+                                q = j[1],
+                                j[1] = c) : i.addEntry(b, c)) : (i = new H(d, b, c, o),
+                            a.push(i),
+                            f[d] = i),
+                        q
+                },
+                this.get = function(c) {
+                    var h, i, j;
+                    return F(c),
+                        h = m(c),
+                        i = P(f, h),
+                        i && (j = i.getEntryForKey(c)) ? j[1] : null
+                },
+                this.containsKey = function(c) {
+                    var e, h;
+                    return F(c),
+                        e = m(c),
+                        h = P(f, e),
+                        h ? h.containsKey(c) : !1
+                },
+                this.containsValue = function(b) {
+                    G(b);
+                    for (var d = a.length; d--;) {
+                        if (a[d].containsValue(b)) {
+                            return !0
+                        }
+                    }
+                    return !1
+                },
+                this.clear = function() {
+                    a.length = 0,
+                        f = {}
+                },
+                this.isEmpty = function() {
+                    return !a.length
+                },
+                p = function(b) {
+                    return function() {
+                        for (var e = [], h = a.length; h--;) {
+                            a[h][b](e)
+                        }
+                        return e
+                    }
+                },
+                this.keys = p("keys"),
+                this.values = p("values"),
+                this.entries = p("getEntries"),
+                this.remove = function(b) {
+                    var h, c, i, j;
+                    return F(b),
+                        c = m(b),
+                        i = null,
+                        j = P(f, c),
+                        j && (i = j.removeEntryForKey(b),
+                            null !== i && 0 == j.entries.length && (h = O(a, c),
+                                a.splice(h, 1),
+                                delete f[c])),
+                        i
+                },
+                this.size = function() {
+                    for (var b = 0, d = a.length; d--;) {
+                        b += a[d].entries.length
+                    }
+                    return b
+                }
+        }
+        var F, G, I, J, K, w = "function",
+            x = "string",
+            y = "undefined";
+        return typeof encodeURIComponent == y || Array.prototype.splice === v || Object.prototype.hasOwnProperty === v ? null : (F = E("key"),
+            G = E("value"),
+            I = 0,
+            J = 1,
+            K = 2,
+            H.prototype = {
+                getEqualityFunction: function(b) {
+                    return typeof b.equals == w ? C : D
+                },
+                getEntryForKey: M(J),
+                getEntryAndIndexForKey: M(K),
+                removeEntryForKey: function(c) {
+                    var d = this.getEntryAndIndexForKey(c);
+                    return d ? (this.entries.splice(d[0], 1),
+                        d[1]) : null
+                },
+                addEntry: function(c, d) {
+                    this.entries.push([c, d])
+                },
+                keys: N(0),
+                values: N(1),
+                getEntries: function(f) {
+                    var h, i, j, g = f.length;
+                    for (h = 0,
+                        i = this.entries,
+                        j = i.length; j > h; ++h) {
+                        f[g + h] = i[h].slice(0)
+                    }
+                },
+                containsKey: M(I),
+                containsValue: function(d) {
+                    for (var e = this.entries, f = e.length; f--;) {
+                        if (d === e[f][1]) {
+                            return !0
+                        }
+                    }
+                    return !1
+                }
+            },
+            Q.prototype = {
+                each: function(e) {
+                    for (var h, f = this.entries(), g = f.length; g--;) {
+                        h = f[g],
+                            e(h[0], h[1])
+                    }
+                },
+                equals: function(f) {
+                    var g, h, i, j = this.size();
+                    if (j == f.size()) {
+                        for (g = this.keys(); j--;) {
+                            if (h = g[j],
+                                i = f.get(h),
+                                null === i || i !== this.get(h)) {
+                                return !1
+                            }
+                        }
+                        return !0
+                    }
+                    return !1
+                },
+                putAll: function(b, k) {
+                    for (var m, n, o, p, l = b.entries(), q = l.length, r = typeof k == w; q--;) {
+                        m = l[q],
+                            n = m[0],
+                            o = m[1],
+                            r && (p = this.get(n)) && (o = k(n, p, o)),
+                            this.put(n, o)
+                    }
+                },
+                clone: function() {
+                    var b = new Q(this.properties);
+                    return b.putAll(this),
+                        b
+                }
+            },
+            Q.prototype.toQueryString = function() {
+                for (var g, e = this.entries(), f = e.length, h = []; f--;) {
+                    g = e[f],
+                        h[f] = encodeURIComponent(z(g[0])) + "=" + encodeURIComponent(z(g[1]))
+                }
+                return h.join("&")
+            }, Q)
+    }();
+
+    function stringTodate(a, b) {
+        try {
+            var c = new Date(a.replace(/-/g, "/")).Format(b);
+            return c
+        } catch (d) {
+            return ""
+        }
+    }
+    var hashtable = new Hashtable;
+    var k = "";
+
+
+    function getTy() {
+        $.ajax({
+            type: "GET",
+            url: "http://typhoon.zjwater.gov.cn/Api/TyhoonActivity",
+            dataType: "jsonp",
+            jsonp: "callback",
+            success: function(a) {
+                var b, c, d, e, f, g, h, i, j, l, m, n, o, p;
+                if ("" != a && void 0 != a && "undefined" != a && "null" != a && null != a) {
+                    if (a.length > 0)
+                        for (b = 0; b < a.length; b++)
+                            c = a[b]["tfid"],
+                            "" != c && null != c && "null" != c && (d = hashtable.get("tfids"),
+                                "" == d || null == d || void 0 == d ? d = c : d.indexOf(c) < 0 && (d = d + "," + c),
+                                e = a[b]["name"],
+                                f = a[b]["enname"],
+                                f = "" != f || null != f || "null" != f.toLowerCase() ? "(" + f + ")" : "",
+                                g = a[b]["timeformate"],
+                                h = a[b]["lng"],
+                                h = "" != h || null != h || "null" != h.toLowerCase() ? h + "°" : "--",
+                                i = a[b]["lat"],
+                                i = "" != i || null != i || "null" != i.toLowerCase() ? i + "°" : "--",
+                                j = a[b]["strong"],
+                                l = a[b]["power"],
+                                l = "" != l || null != l || "null" != l.toLowerCase() ? l + "级" : "--",
+                                m = a[b]["speed"],
+                                m = "" != m || null != m || "null" != m.toLowerCase() ? m + "米/秒" : "--",
+                                n = a[b]["pressure"],
+                                n = "" != n || null != n || "null" != n.toLowerCase() ? n + "百帕" : "--",
+                                o = a[b]["movespeed"],
+                                o = "" != o || null != o || "null" != o.toLowerCase() ? o + "公里/小时" : "--",
+                                a[b]["movedirection"],
+                                k = k + "<span>" + c.substr(0, 4) + "年第" + c.substr(4, 2) + "号" + j + e + f + "</span> &nbsp; " + g + "，风速" + m + "，移速" + o + "，东经" + h + "，北纬" + i + "，气压" + n + "，近中心最大风力" + l + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp",
+                                hashtable.put("tfids", d),
+                                hashtable.put("typhoon" + c, a[b]));
+
+                } else
+                    
+                    k = "<span>" + stringTodate(thetime, "yyyy年MM月dd日") + "</span>&nbsp;&nbsp;&nbsp;当前西太平洋无台风";
+                $("#tfinfomarqueen").empty().html(k);
+            }
+        });
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <style>
+    div {
+
+      position: absolute;
+
+      width: 200px;
+
+      height: 200px;
+
+      border-radius: 50%;
+
+    }
+
+    /* 圆底 */
+
+    #circle {
+      position: relative;
+      background-color: yellow;
+    }
+
+    /* 上半部分 */
+
+    #t {
+
+      background-color: white;
+
+      clip: rect(0px, auto, 100px, auto);
+
+      transform: rotate(30deg);
+
+      background-color: #ccc;
+
+    }
+
+    /* 下半部分 */
+
+    #b {
+
+      background-color: white;
+
+      clip: rect(100px, auto, auto, auto);
+
+      background-color: #ccc;
+
+    }
+
+    /* 中心白 */
+
+    #p {
+
+      width: 150px;
+
+      height: 150px;
+
+      line-height: 150px;
+
+      left: 25px;
+
+      top: 25px;
+
+      text-align: center;
+
+      border-radius: 50%;
+
+      background-color: #FFFFFF;
+
+    }
+  </style>
+
+  <script>
+
+    function setPercent(v) {
+
+      if (v < 0.5) {
+
+        document.getElementById("t").style.backgroundColor = "#ccc";
+
+        document.getElementById("t").style.transform = "rotate(" + (360 * v) + "deg)";
+
+      } else {
+
+        document.getElementById("t").style.backgroundColor = "yellow";
+
+        document.getElementById("t").style.transform = "rotate(" + (360 * (v - 0.5)) + "deg)";
+
+      }
+
+      document.getElementById("p").innerHTML = (v * 100) + "%";
+
+    }
+
+  </script>
+
+</head>
+
+<body>
+
+
+
+  <div id="circle">
+
+    <div id="b"></div>
+
+    <div id="t"></div>
+
+    <div id="p"></div>
+
+  </div>
+
+  <p>
+
+    <input style="margin-left:50px;" type="button" value="30%" onclick="setPercent(0.3)" />
+
+    <input type="button" value="70%" onclick="setPercent(0.7)" />
+
+  </p>
+
+</body>
+
+</html>

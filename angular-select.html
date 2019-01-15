@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="js/angular.min.js"></script>
+</head>
+
+<body  ng-controller="ColorController" ng-app="myApp">
+    <input type="text" placeholder="请在此输入关键字" ng-model="test">
+    <ul style="padding-bottom: 200px;">
+        <li ng-repeat="x in colors | filter : test">{{x.name}}</li>
+    </ul>
+
+
+    <script type="text/javascript">
+        (function () {
+            'use strict';
+
+            angular.module('myApp', [])
+                .controller('ColorController', ['$scope', function ($scope) {
+                    $scope.colors = [{
+                            name: 'black',
+                            shade: 'dark'
+                        },
+                        {
+                            name: 'white',
+                            shade: 'light',
+                            notAnOption: true
+                        },
+                        {
+                            name: 'red',
+                            shade: 'dark'
+                        },
+                        {
+                            name: 'blue',
+                            shade: 'dark',
+                            notAnOption: true
+                        },
+                        {
+                            name: 'yellow',
+                            shade: 'light',
+                            notAnOption: false
+                        }
+                    ];
+                    $scope.array = [ 222,323,533,21,623,2,314,2341,457,5678,789,23 ];
+                }]);
+
+
+        })();
+    </script>
+</body>
+
+</html>

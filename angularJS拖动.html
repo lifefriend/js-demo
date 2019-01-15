@@ -1,0 +1,225 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  
+      <link rel="stylesheet" type="text/css" href="js/bootstrap-3.3.0/css/bootstrap.min.css">
+    
+  
+    
+      <script type="text/javascript" src="js/jquery.min.js"></script>
+    
+  
+    
+      <script type="text/javascript" src="js/angular.min.js"></script>
+    
+  
+
+  <style type="text/css">
+    .dialog {
+  position: fixed;
+  width: 400px;
+  height: 300px;
+  top: 30px;
+  left: 30px;
+  border: 1px solid #d7d7d7;
+  transition: 200ms; }
+  .dialog .header {
+    background: #f2f2f2;
+    border-bottom: 1px solid #d7d7d7; }
+    .dialog .header section {
+      padding: 8px; }
+      .dialog .header .left {
+        float: left;
+        border-right: 1px solid #d7d7d7;
+        border-top-right-radius: 0; }
+        .dialog .header .middle {
+          padding: 8px;
+          margin: 0 32px; }
+          .dialog .header .right {
+            float: right;
+            border-left: 1px solid #d7d7d7;
+            border-top-left-radius: 0; }
+
+  </style>
+
+  <title>Angularjs directive movabled by wcp1231</title>
+
+  
+</head>
+
+<body ng-app="myApp">
+<div class="dialog" ng-controller="ctrl" movabled move-by=".header .middle" move-toggle="dialogMovabled">
+  <nav class="header">
+    <section class="left btn icon">
+      <span class="glyphicon glyphicon-align-justify"></span>
+    </section>
+    <section class="right btn icon" ng-click="fullscreenToggle()">
+      <span class="glyphicon glyphicon-fullscreen"></span>
+    </section>
+    <section class="middle">
+      Header is fullscreen? {{dialogMovabled}}
+    </section>
+  </nav>
+</div>
+  
+
+
+
+
+<script type='text/javascript'>
+
+angular.module('myApp', [])
+.directive("movabled", function() {
+    return {
+        scope: {
+            moveBy: '@',
+            moveToggle: '='
+        },
+        link: function(scope, iElem, iAttr) {
+            var updateElemCss = function(nValue) {
+                var user_select = nValue == true ? "none" : "inherit",
+                    cursor = nValue == true ? "move" : "auto",
+                    ele = angular.element(scope.moveBy);
+                ele.css("-webkit-user-select", user_select);
+                ele.css("-moz-user-select", user_select);
+                ele.css("-o-user-select", user_select);
+                ele.css("cursor", cursor);
+            }
+            var moveByMouse = function(nValue, oValue) {
+                var offset = iElem.offset();
+                iElem.css("left", offset.left + (nValue.left - oValue.left));
+                iElem.css("top", offset.top + (nValue.top - oValue.top));
+            }
+            scope.$watch("moveToggle", updateElemCss);
+            angular.element(scope.moveBy).on('mousedown', function() {
+                scope.mousedown = true;
+                iElem.css('transition', 'none');
+                scope.removeWatch = scope.$watch("mouseOffset", moveByMouse);
+            }).on('mouseup', function() {
+                scope.mousedown = false;
+                iElem.css('transition', '200ms');
+                scope.removeWatch();
+            });
+            angular.element(document).on('mousemove', function(e) {
+                if(scope.moveToggle && scope.mousedown) {
+                    scope.mouseOffset = {top: e.clientY, left: e.clientX};
+                    scope.$digest();
+                }
+            });
+        },
+    };
+})
+.controller("ctrl", function($scope, $element, $window) {
+    $scope.dialogStatus = 'normal';
+    $scope.dialogMovabled = true;
+    var backupElemPos = function() {
+        $scope.elemPos = $element.offset();
+        $scope.elemPos.height = $element.outerHeight();
+        $scope.elemPos.width = $element.outerWidth();
+    }
+    var updateElemPos = function(top, left, width, height) {
+        $element.css('top', top);
+        $element.css('left', left);
+        $element.css('height', height);
+        $element.css('width', width);
+    }
+    $scope.fullscreenToggle = function() {
+        $scope.dialogMovabled = !$scope.dialogMovabled;
+        if($scope.dialogStatus == 'normal') {
+            $scope.dialogStatus = "fullscreen";
+            backupElemPos();
+            updateElemPos(0, 0, $window.innerWidth, $window.innerHeight);
+        } else {
+            $scope.dialogStatus = 'normal';
+            updateElemPos($scope.elemPos.top, $scope.elemPos.left,
+                          $scope.elemPos.width, $scope.elemPos.height);
+        }
+    }
+});
+
+
+</script>
+
+</body>
+
+</html>
+
+ -->
+
+ <!DOCTYPE html>  
+<html ng-app="myApp">  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>drag</title>  
+        <style>  
+        *{  
+            padding:0;  
+            margin:0;  
+        }  
+            .wei{  
+                width:100px;  
+                height:100px;  
+                background: red;  
+                position:absolute;  
+                cursor: pointer;  
+                /*left:0;top:0;*/  
+            }  
+        </style>  
+    </head>  
+    <body ng-controller="show">  
+            <div class="wei" wei-yi data="true"></div>  
+            <div class="wei" wei-yi data="false"></div>  
+        <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>  
+        <script src="js/angular.min.js" type="text/javascript" charset="utf-8"></script>  
+        <script type="text/javascript">  
+            var app = angular.module('myApp',[]);  
+            //自定义属性  
+            app.directive("weiYi",function(){  
+                return{  
+                    restrict :'A',//A属性,E标签,C类名,D注释   
+                    link :function(scope,element,attr){  
+                        attr.data=angular.equals(attr.data,"true");  
+                        //console.log(attr.data);  
+                        console.log(element);  
+                        element.on("mousedown",function(e){  
+                            var that = $(this);  
+                            console.log(attr.data);  
+                            if(attr.data){  
+                                $div=$("<div>");  
+                                console.log($div);  
+                                $div.css({"width":"100px","height":"100px","border": "2px dotted green","position":"absolute","left":that.offset().left,"top":that.offset().top});  
+                                $div.appendTo($("body"));  
+                            }  
+                            var x=e.clientX-$(this).offset().left;  
+                            var y=e.clientY-$(this).offset().top;  
+                            //console.log(x+":"+y);  
+                            $(document).on("mousemove",function(e){  
+                                if(attr.data){  
+                                    $div.css({"left":e.clientX-x,"top":e.clientY-y});  
+                                }else{  
+                                    that.css({"left":e.clientX-x,"top":e.clientY-y});  
+                                }  
+                            });  
+                            $(document).on("mouseup",function(e){  
+                                //console.log($div);  
+                                $(document).off();  
+                                if(attr.data){  
+                                    that.css({"left":$div.offset().left,"top":$div.offset().top});  
+                                    $div.remove();  
+                                }  
+                            })  
+  
+                        })  
+                    }  
+                }  
+            });  
+            app.controller('show',['$scope',function(scope$){  
+  
+                  
+            }]);  
+        </script>   
+    </body>  
+</html>  

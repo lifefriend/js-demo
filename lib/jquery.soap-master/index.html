@@ -1,0 +1,46 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+</head>
+
+<body>
+    <!-- https://github.com/doedje/jquery.soap -->
+    <input id="ss" type="button" value="点击" onclick="test()" />
+</body>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.soap.js"></script>
+<script type="text/javascript">
+function test() {
+    $.soap({
+        url: 'http://localhost:1000/webservice/dangerService/',
+        method: 'querySafety',
+        // wss: {
+        //     "key": '402881c2591b85da01591b874bf40001'
+        // },
+        data: {
+            key: '402881c2591b85da01591b874bf40001',
+            enterprise_type: 'QY_WXHXP',
+            actionType: "getEnterpriseByType",
+            typecode: 'QY_WXHXP',
+            page: 1,
+            rows: 1000
+        },
+
+        success: function(soapResponse) {
+            // do stuff with soapResponse
+            // if you want to have the response as JSON use soapResponse.toJSON();
+            // or soapResponse.toString() to get XML string
+            // or soapResponse.toXML() to get XML DOM
+            console.log("ok");
+            console.log(soapResponse);
+        },
+        error: function(SOAPResponse) {
+            console.log(SOAPResponse);
+        }
+    });
+}
+</script>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用ajax获取用户所在地的天气</title>
+    <script src="./js/jquery.min.js"></script>
+</head>
+
+<body>
+    <script>
+        var city1;
+        $.ajax({
+            //获取客户端 IP 和 归属地
+            url: "http://chaxun.1616.net/s.php?type=ip&output=json",
+            dataType: "jsonp",
+            success: function (data) {
+                console.log('ip:' + data.Ip)
+                console.log('归属地:' + data.Isp)
+                var lcity = data.Isp.split(' ')[0];
+                //获取短名称，如淮安市
+                city1 = lcity.split('省')[1];
+                console.log(city1)
+                //因为是异步刷新，所以两个请求几乎同时进行
+                $.ajax({
+                    type: 'get',
+                    url: 'http://jisutqybmf.market.alicloudapi.com/weather/query',
+                    async: true,
+                    //设置验证方式，设置请求头
+                    //1，APPCode
+                    headers: {
+                        Authorization: "APPCODE edc41a0bfae74864b90ce267502e029a"
+                    },
+                    //2.APPSecret 暂时不能用
+                    //headers: { AppKey: '你的APPKey', AppSecret :'你的APPSecret' },
+                    data: {
+                        city: city1
+                    },
+                    success: function (result) {
+                        console.log(result['result'])
+                        //alert(result)
+                    },
+                    error: function () {
+                        alert('error')
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

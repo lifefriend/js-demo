@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="wrap">
+    <div id="Brand">
+      <div>品牌</div>
+        <ul class="mycar_hot_list">
+          <li>
+            <p>大众</p>
+          </li>
+        </ul>
+    </div>
+    <div id="Type"  style="display:none">
+        <dl>
+        <dt>比亚迪汽车</dt>
+        <dd>宋</dd>
+      </dl>
+    </div>
+    <div id="Series" style="display:none">
+      <ul class="mycar_datalist">
+         <li>
+           2013年款
+         <li>
+      </ul>
+    </div>
+  </div>
+  <script type="text/javascript">
+  	window.onload=function(){
+        info.selectBrand();  //为默认显示的模块中的元素绑定相应的事件及其他逻辑
+        $(window).on("hashchange", function (e) {
+            doHashChange();
+       });
+	}
+  	info={
+            brand:'',
+            carType:'',
+            carSeries:'',
+            pages:['Brand','Type','Series']  
+        };
+	info.selectBrand=function(){
+	      document.title = '选择商标'; 
+	      brandEvent();
+	}
+	//选择车型
+	info.selectType=function(){
+	      document.title = '选择车型';
+	      document.body.scrollTop = 0;  //滚到顶部
+	       window.scrollTo(0, 0); 
+	       typeEvent();  //为该模块的dom绑定事件或做其他逻辑
+	}
+	//选择车系
+	info.selectSeries=function(){
+	      document.title = '选择车系';
+	      document.body.scrollTop = 0;
+	      window.scrollTo(0, 0); 
+	      seriesEvent();
+	}
+	function brandEvent(){
+    //绑定跳转
+       $('#Brand ul li').click(function(){
+           info.brand=$(this).find('p').text();
+           goPage('Type');
+       })
+      }
+    function typeEvent(){
+    //绑定跳转
+       $('#Type  dd').click(function(){
+           info.carType=$(this).text();
+           goPage('Series');
+       })
+    }
+    function seriesEvent(){}
+    function goPage(tag) {
+        if ((tag == 'Brand')&&(location.hash.indexOf('Type')!=-1)){ // 后退操作
+                history.back();
+                document.title = '选择商标';  
+        }else if ((tag == 'Type')&&(location.hash.indexOf('Series')!=-1)){
+                history.back();
+                document.title = '选择车型'; 
+        }else {
+            location.hash = tag;
+        }
+    }
+    function doHashChange(){
+        //获取hash的值
+        var hash = location.hash.split('|')[0],
+            tag = hash.replace(/#/g, '');
+        if (info.pages.indexOf(tag) == -1) {
+            tag = 'Brand';
+        }
+        $('.wrap').children('div').hide();    
+        //执行每个模块不同的方法
+        if(typeof(info['select' + tag]) == "function"){
+            info['select' + tag]();
+        }
+        //展示对应dom
+        $('#' + tag).show();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang='zh-cn'>
+<head>
+<title>Insert you title</title>
+<meta name='description' content='this is my page'>
+<meta name='keywords' content='keyword1,keyword2,keyword3'>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type='text/javascript' src='./js/jquery.min.js'></script>
+<style type='text/css'>
+html,body,img,canvas {
+    margin: 0; padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background: #000;
+}
+
+#can {
+    background: #FFF; display: block; margin: 25px auto; border-radius: 2px;
+}
+</style>
+<script type='text/javascript'>
+    $( function(){
+        var can = $( '#can' ).get( 0 );
+        var oCan = can.getContext( '2d' );
+
+        oCan.beginPath();
+        oCan.fillStyle = getRandomColor();
+        oCan.rect( 20 , 50 , 100 , 100 );
+        oCan.fill();
+        oCan.closePath();
+
+        oCan.beginPath();/* 如果要想只点击最后绘制的图形有效果就使用开始路径和闭合路径包裹起来,如果要作用于整个画布在任何有图形地方点击有效果就只使用一个大的开始及闭合路径包裹起来既可以了 */
+        oCan.fillStyle = getRandomColor();
+        //oCan.fillRect(200 , 150 , 100 , 100);    /* 直接使用这种方式来使用oCan.isPointInPath(x,y)判断是无效的,无论点击哪里都是无效的 返回false */
+        oCan.rect( 200 , 150 , 100 , 100 );/* 要想使用 oCan.isPointInPath(x,y)来判断就必须结合使用 37 38 行间代码,否则无效 */
+        oCan.fill();
+        oCan.closePath();
+
+        can.onmousedown = function( ev ){
+            var ev = window.event || ev;
+            var clientX = ev.clientX - this.offsetLeft;
+            var clientY = ev.clientY - this.offsetTop;
+            if( oCan.isPointInPath( clientX , clientY ) == 1 /*用于判断在当前路径中是否包含检测点的方法,只检测我们最后绘制出来的图形*/
+                            || oCan.isPointInPath( clientX , clientY ) == true
+                            || oCan.isPointInPath() ){ /* 在不同的浏览器中对于布尔值的显示不同 推荐直接使用最后一种方式来进行判断,因为 这是JS中对于布尔值的判断机制 (非0的数值,非空字符串,true均被认为真的)*/
+                alert( '点击的是在我们最后绘制的图形中...' );
+            }
+        };
+
+        function getRandomColor(){
+            var num = '0xFFFFFF';
+            var len = Math.ceil( Math.random() * parseInt( num , 16 ) ).toString( 16 );
+            if( length < 6 ){
+                for( var i = 0 ; i < 6 - len.length ; i++ ){
+                    len += '0';
+                }
+            }
+            return '#' + len;
+        }
+    } );
+</script>
+</head>
+<body>
+    <canvas id='can' width='500' height='450'>检测到您的浏览器版本过低,请升级您的浏览器,以获取更好的体验效果...</canvas>
+</body>
+</html>

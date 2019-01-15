@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>利用 CSS 的 content 属性 attr 抓取资料</title>
+    <style>
+        div {
+            width: 100px;
+            border: 1px solid red;
+            position: relative;
+        }
+
+        div:hover:after {
+            content: attr(data-msg);
+            position: absolute;
+            font-size: 12px;
+            width: 200%;
+            line-height: 30px;
+            text-align: center;
+            left: 0;
+            top: 25px;
+            border: 1px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <div data-msg="Open this file in Github Desktop">
+        hover
+    </div>
+</body>
+
+</html>
