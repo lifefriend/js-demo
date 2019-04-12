@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body,
+      .container {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: red;
+      }
+    .one {
+      background-color: blue;
+      grid-column: 1/3;
+      display: grid;
+    }
+    .one > div {
+      text-align: center;
+      align-self: center;
+    }
+    .two {
+      background-color: green;
+    }
+    .three {
+      background-color: burlywood;
+    }
+    .four {
+      background-color: hotpink;
+      grid-column: 1/3;
+      /* grid-column-star: 1;
+      grid-column-end: 3; */
+    }
+    .container {
+      display: grid;
+      grid: 50px auto 50px / 100px auto;
+      grid-gap:5px;
+      /* grid-template-rows: 50px auto 50px;
+      grid-template-columns: 200px auto; */
+    }
+  </style>
+</head>
+<body>
+  <!-- http://web.jobbole.com/91146/ -->
+  <div class="container">
+    <div class="one">
+      <div>
+          one
+      </div>
+    </div>
+    <div class="two">two</div>
+    <div class="three">three</div>
+    <div class="four">four</div>
+  </div>
+</body>
+</html>
