@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS Animations</title>
+	<style type="text/css">
+		@keyframes colorchange {
+		  0% { background: yellow }
+		  100% { background: blue }
+		}
+
+		.box {
+		  width: 100px;
+		  height: 100px;
+		  border: 1px solid black;
+		}
+
+		.changing {
+		  animation: colorchange 2s;
+		}    
+			
+		.slidein {
+		  animation-duration: 5s;
+		  animation-name: slidein;
+		  animation-iteration-count: infinite;
+		}
+
+		.stopped {
+		  animation-name: none;
+		}
+
+		@keyframes slidein {
+		  0% {
+			margin-left: 0%;
+		  }
+		  50% {
+			margin-left: 50%;
+		  }
+		  100% {
+			margin-left: 0%;
+		  }
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+	</div>
+	<div class="runButton">Click me to run the animation</div>
+	<h1 id="watchme">Click me to stop</h1>
+	<script type="text/javascript">
+		document.querySelector(".runButton").addEventListener("click", play, false);
+		function play() {
+		  document.querySelector(".box").className = "box";
+		  window.requestAnimationFrame(function(time) {
+			window.requestAnimationFrame(function(time) {
+			  document.querySelector(".box").className = "box changing";
+			});
+		  });
+		}
+		let watchme = document.getElementById('watchme')
+
+		watchme.className = 'slidein'
+		const listener = (e) => {
+		  watchme.className = 'slidein stopped'
+		}
+		watchme.addEventListener('click', () =>
+		  watchme.addEventListener('animationiteration', listener, false)
+		)
+	</script>
+</body>
+</html>
